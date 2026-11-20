@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bookable — 讓客人自己預約，你不用一直回訊息</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0A0A0F;color:#fff;font-family:Inter,"Noto Sans TC",system-ui,Arial,sans-serif}
+a{color:#FF3B5C}.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:rgba(10,10,15,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
+.nav{display:flex;align-items:center;gap:12px;padding:14px 0}.logo{font-weight:900;font-size:22px}.logo span{color:#FF3B5C}
+.navlinks{margin-left:auto;display:flex;gap:8px}.navlinks button,.lang button{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;padding:8px 14px;border-radius:999px;cursor:pointer}
+.navlinks button.active,.lang button.active{background:#FF3B5C;border-color:#FF3B5C}.lang{display:flex;gap:6px}
+.hero{text-align:center;padding:44px 0 10px}.badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:6px 14px;border-radius:999px;font-size:13px}
+h1{font-size:clamp(32px,5vw,56px);line-height:1.08;margin:16px 0 10px}.grad{background:linear-gradient(90deg,#FF3B5C,#8B5CF6,#00D9FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:#B8BDC9;max-width:680px;margin:0 auto;font-size:17px;line-height:1.6}.stars{color:#FFD700;font-size:18px;margin-top:10px}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.btn{padding:14px 22px;border-radius:999px;border:0;cursor:pointer;font-weight:800;font-size:16px}.btn-pink{background:linear-gradient(90deg,#FF3B5C,#8B5CF6);color:#fff}.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;margin:24px 0}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.navlinks{display:none}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;text-align:left;position:relative;transition:.2s}.card:hover{border-color:rgba(255,255,255,.25)}
+.card.sel{border-color:#FF3B5C;box-shadow:0 0 0 2px #FF3B5C,0 10px 40px rgba(255,59,92,.25)}
+.card.ai{border-color:#8B5CF6;box-shadow:0 0 0 1px #8B5CF6,0 10px 40px rgba(139,92,246,.25)}
+.card h3{margin:8px 0;font-size:20px}.card p{color:#9CA3AF;margin:6px 0;line-height:1.6;font-size:14.5px}.pill{display:inline-block;font-size:12px;background:#FF3B5C;padding:4px 10px;border-radius:999px;font-weight:700}.pill-purple{background:#8B5CF6}.pill-green{background:#00C853;color:#000}
+.price{font-size:22px;font-weight:900;margin:10px 0 2px}.price small{font-size:13px;color:#9CA3AF;font-weight:400}
+.proof{font-size:13px;color:#D1D5DB;background:rgba(255,255,255,.06);padding:8px 10px;border-radius:10px;margin:10px 0}
+.chat{background:#111118;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;font-size:13.5px;line-height:1.6}.chat .me{background:rgba(255,59,92,.18);padding:8px 10px;border-radius:12px;margin:6px 0}.chat .bot{background:rgba(139,92,246,.18);padding:8px 10px;border-radius:12px;margin:6px 0}
+.cart{position:sticky;top:80px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px}
+.cart h3{margin:0 0 6px}.cart ul{list-style:none;padding:0;margin:12px 0}.cart li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:14px}
+.total{display:flex;justify-content:space-between;font-weight:900;font-size:18px;margin:12px 0}
+input,textarea,select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;margin:6px 0}
+label{font-size:13px;color:#9CA3AF}.dates{display:flex;gap:8px;overflow-x:auto;padding:8px 0}.dates button,.times button{white-space:nowrap;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;cursor:pointer}.dates button.sel,.times button.sel{background:#FF3B5C;border-color:#FF3B5C}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:600px){.times{grid-template-columns:repeat(2,1fr)}}
+.section{padding:28px 0}.video{width:100%;border-radius:16px;background:#111;display:block;min-height:200px}
+.success{background:#0f2a1a;border:1px solid #22c55e;border-radius:16px;padding:20px;text-align:center}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;color:#9CA3AF;text-align:center}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:700px){.steps{grid-template-columns:1fr}}
+.who{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.who span{background:rgba(255,255,255,.08);padding:7px 12px;border-radius:999px;font-size:13px}
+</style></head><body>
+<header><div class="wrap nav"><div class="logo">Bookable<span>.</span></div><div class="navlinks"><button id="tabDash" class="active" onclick="showPage('dashboard')">自由搭配</button><button id="tabBook" onclick="showPage('booking')">快速預約報價</button></div><div class="lang"><button class="active" onclick="setLang('zh',this)">繁中</button><button onclick="setLang('en',this)">EN</button><button onclick="setLang('ja',this)">日本語</button></div></div></header>
+<div class="wrap">
+<div id="page-dashboard">
+<section class="hero"><span class="badge">✦ 深受台灣 120+ 工作室信賴 ・ 平均 7 天上線 ・ 包含 1 年維護</span>
+<h1>讓客人自己預約<br><span class="grad">你不用一直回訊息</span></h1>
+<p class="sub">不用再漏接電話、半夜回 LINE。選你要的功能，組合起來就是你的店專屬系統。不知道怎麼選？傳給我們，我們幫你配。</p>
+<div class="stars">★★★★★ <span style="color:#fff;font-size:15px">5.0 — 美業・餐廳・診所老闆都在用</span></div>
+<div class="who"><span>💅 美甲・美睫</span><span>💇 美髮・美容</span><span>🍜 餐廳・咖啡</span><span>🏥 診所・諮商</span><span>💪 健身・瑜珈</span></div>
+<div class="cta"><button class="btn btn-pink" onclick="document.getElementById('combo').scrollIntoView({behavior:'smooth'})">👇 開始搭配我的組合</button><button class="btn btn-ghost" onclick="goBook('line')">💬 不確定？LINE 問我，幫你配</button></div>
+</section>
+
+<section id="combo"><h2>自由搭配 — 選你要的，加進購物車</h2><p style="color:#9CA3AF">可以只買一個，也可以組合買。組合買更便宜，而且會互相串接。</p>
+<div class="layout">
+<div class="grid" id="typeGrid"></div>
+<aside class="cart"><h3>🛒 你的組合</h3><p id="cartEmpty" style="color:#9CA3AF;font-size:14px">購物車是空的，去左邊選一個功能</p><ul id="cartList"></ul><div class="total" id="cartTotal" style="display:none"><span>預估合計</span><span id="totalPrice"></span></div><p style="font-size:13px;color:#9CA3AF">💡 <b style="color:#fff">不確定要哪些？</b><br>打電話 / 留言，我幫你配最適合的組合，不會多買。</p><a href="https://line.me/ti/p/A2pAmEM5Ce" target="_blank" style="text-decoration:none"><button class="btn btn-pink" style="width:100%;background:#06C755">LINE 私訊我幫你配 →</button></a><p style="font-size:12px;color:#9CA3AF;text-align:center;margin-top:8px">點了會跳到 LINE，你把購物車截圖給我看就好</p><p style="font-size:12px;color:#9CA3AF">✅ 7 天上線 ✅ 1 年維護 ✅ 不會用，教你到會</p></aside>
+</div>
+</section>
+
+<section><h2>看看預約流程 — 真實客人怎麼用</h2><div class="card" style="text-align:center"><h3>See how booking works</h3><p>Real booking flow — M.nail on LINE, reply in seconds</p><video class="video" controls playsinline src="demo/linereply.mp4"></video><p style="font-size:13px;color:#9CA3AF">如果影片沒跑出來，請確認 demo/linereply.mp4 跟這個 html 在同一個資料夾旁邊的 demo/ 資料夾裡。</p></div></section>
+
+<section><h2>怎麼運作？3 步就好</h2><div class="steps"><div class="card"><b>1.</b><h3>選組合</h3><p>選官網 / 預約 / AI 電話助理，加入購物車。</p></div><div class="card"><b>2.</b><h3>LINE 傳給我們</h3><p>把購物車截圖傳 LINE，我們確認報價 + 上線時間。</p></div><div class="card"><b>3.</b><h3>7 天上線</h3><p>我們做好給你看，你 OK 才上線。之後有問題都找我們。</p></div></div></section>
+</div>
+
+<div id="page-booking" style="display:none">
+<section><h1>快速預約報價</h1><p class="sub">選 Email、LINE 或 Zoom。行事曆只給 Zoom 用。LINE 最快，幾秒回。</p>
+<div class="grid" id="typeGrid2"></div>
+<div id="dynamicStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0"></div>
+<div class="card">
+<div id="zoomFields" style="display:none"><label>選擇日期</label><div class="dates" id="dates"></div><label>選擇時間</label><div class="times" id="times"></div></div>
+<label>姓名 / 店名</label><input id="fName" placeholder="例如：M.nail / Charlie">
+<label>Email</label><input id="fEmail" placeholder="you@email.com">
+<div id="lineField" style="display:none"><label>LINE ID</label><input id="fLine" placeholder="@yourline"></div>
+<label>你需要什麼？</label><textarea id="fMsg" rows="3" placeholder="例如：美甲店，想讓客人自己預約，不想一直回 LINE..."></textarea>
+<button class="btn btn-pink" style="width:100%" id="bookBtn" onclick="submitBooking()">Book via LINE — Reply in seconds</button>
+<div id="result"></div><p style="font-size:12px;color:#9CA3AF">Demo 前端。正式版會串接你的後端 /api/bookings。</p>
+</div></section>
+</div>
+<footer>Bookable — Rated 5/5 • EN / 繁中 / 日本語 • Email • LINE • Zoom • AI 電話助理</footer>
+</div>
+<script>
+const LINE_URL='https://line.me/ti/p/A2pAmEM5Ce';
+let cur='line', lang='zh', selDate='', selTime='', cart=new Set();
+const products={
+ website:{icon:'🏠',badge:'最熱門',badgeClass:'',title:{zh:'形象官網',en:'Website',ja:'公式サイト'},outcome:{zh:'讓客人 Google 到你，覺得你很專業',en:'Get found on Google, look professional',ja:'Googleで見つけて、プロに見せる'},desc:{zh:'品牌官網 + 手機版 + SEO基礎。客人搜尋、看評價、直接預約都在同一頁。',en:'Brand site + mobile + SEO basics.',ja:'ブランドサイト＋モバイル＋SEO基礎'},price:'NT$ 15,000 起',priceNote:{zh:'一次性 ・ 含 1 年維護',en:'One-time ・ 1yr maintenance',ja:'一回 ・ 1年保守'},proof:'已有 80+ 店家用這款開店，平均 7 天上線'},
+ booking:{icon:'🗓️',badge:'美業最愛',badgeClass:'',title:{zh:'預約系統',en:'Booking System',ja:'予約システム'},outcome:{zh:'客人自己預約，你不用一直回訊息',en:'Customers book themselves. No more replying all day.',ja:'お客様が自分で予約。返信地獄から解放'},desc:{zh:'線上預約 + LINE 通知 + 行事曆。預約、取消、改期都自動，減少 No-show。',en:'Online booking + LINE notify + calendar.',ja:'オンライン予約＋LINE通知＋カレンダー'},price:'NT$ 990 / 月 起',priceNote:{zh:'月付 ・ 可隨時停',en:'Monthly ・ Cancel anytime',ja:'月額 ・ いつでも解約'},proof:'美業老闆平均每天省 2 小時回 LINE，少接漏接'},
+ ai:{icon:'🤖',badge:'NEW ・ 節省人力',badgeClass:'pill-purple',title:{zh:'AI 電話助理',en:'AI Phone Assistant',ja:'AI電話アシスタント'},outcome:{zh:'沒接到的電話，AI 幫你接回來',en:'Missed calls? AI answers for you.',ja:'取れなかった電話、AIが代わりに出る'},desc:{zh:'專屬號碼 + AI 接聽 + 預約 + 問答。忙著做客人的時候，AI 幫你接電話、問問題、直接預約。',en:'Dedicated number + AI answers + books + Q&A.',ja:'専用番号＋AI応答＋予約＋Q&A'},price:'NT$ 1,490 / 月 起',priceNote:{zh:'含專屬號碼 ・ 24H 接聽',en:'Includes number ・ 24h',ja:'専用番号込み・24時間'},proof:'適合：做客人的時候沒手接電話、常常漏接'},
+ call:{icon:'📞',badge:'免費諮詢',badgeClass:'pill-green',title:{zh:'Call / 留言取得報價',en:'Call / Message for Quote',ja:'電話・メッセージで見積'},outcome:{zh:'不確定要哪些？我幫你配',en:'Not sure? We help you pick.',ja:'迷ったら、私たちが選ぶのを手伝う'},desc:{zh:'不用顯示價格 — 私訊我，說你的需求，我給你最適合的組合報價。',en:'Custom quote — message us.',ja:'カスタム見積 — メッセージください'},price:'免費諮詢',priceNote:{zh:'不買也沒關係',en:'No pressure',ja:'買わなくてもOK'},proof:'90% 的老闆都是先問，再決定'}
+};
+const i18n={zh:{},en:{},ja:{}};
+function renderProducts(){
+ ['typeGrid','typeGrid2'].forEach(id=>{
+  let el=document.getElementById(id); if(!el) return; el.innerHTML='';
+  Object.keys(products).forEach(k=>{
+   let p=products[k]; let d=document.createElement('div'); d.className='card'+(cart.has(k)?' sel':'')+(k==='ai'?' ai':'');
+   let extra=k==='ai'?`<div class="chat"><div class="me">客人：請問明天還有位子嗎？</div><div class="bot">Mia：有的，請問幾位？幫您預約明天 7 點可以嗎？</div></div>`:'';
+   d.innerHTML=`<span class="pill ${p.badgeClass}">${p.badge}</span><div style="font-size:28px;margin-top:8px">${p.icon}</div><h3>${p.title[lang]}</h3><p style="color:#fff;font-weight:700;font-size:15px">${p.outcome[lang]}</p><p>${p.desc[lang]}</p>${extra}<div class="price">${p.price} <small>${p.priceNote[lang]}</small></div><div class="proof">✅ ${p.proof}</div><button class="btn ${cart.has(k)?'btn-ghost':'btn-pink'}" style="padding:10px 16px;font-size:14px;width:100%" onclick="toggleCart('${k}',event)">${cart.has(k)?'✓ 已加入 — 點我移除':'+ 加入購物車'}</button>`;
+   el.appendChild(d);
+  });
+ });
+ renderCart();
+}
+function toggleCart(k,e){ e&&e.stopPropagation(); if(cart.has(k)) cart.delete(k); else cart.add(k); renderProducts(); }
+function renderCart(){
+ let list=document.getElementById('cartList'); if(!list) return;
+ list.innerHTML=''; document.getElementById('cartEmpty').style.display=cart.size?'none':'block';
+ document.getElementById('cartTotal').style.display=cart.size?'flex':'none';
+ let total=0; cart.forEach(k=>{ let li=document.createElement('li'); li.innerHTML=`<span>${products[k].icon} ${products[k].title[lang]}</span><span>${products[k].price}</span>`; list.appendChild(li); });
+ document.getElementById('totalPrice').textContent=cart.size? 'LINE 問精準報價 →':'';
+}
+const types={email:{icon:'✉️',title:{en:'Email',zh:'Email',ja:'Email'},desc:{en:'Async — reply within 24h',zh:'非同步 — 24小時內回覆',ja:'非同期 — 24時間以内に返信'},stats:[['24h','Reply within 24h'],['No scheduling','No date needed'],['Async','Send anytime']]},line:{icon:'💬',title:{en:'LINE Message',zh:'LINE 訊息',ja:'LINEメッセージ'},desc:{en:'Instant chat — reply in seconds',zh:'即時聊天 — 幾秒內回覆',ja:'インスタント — 数秒で返信'},stats:[['Seconds','Reply in seconds'],['No scheduling','No date needed'],['Instant','Chat on LINE']]},zoom:{icon:'🎥',title:{en:'Zoom Call',zh:'Zoom 視訊',ja:'Zoom通話'},desc:{en:'30-min face to face',zh:'30分鐘面對面',ja:'30分 対面'},stats:[['30 min','Duration'],['Pick date+time','Calendar booking'],['Zoom link','Sent by email']]}};
+function renderStats(){let s=types[cur].stats;document.getElementById('dynamicStats').innerHTML=s.map(x=>`<div style="background:rgba(255,255,255,.06);border-radius:16px;padding:16px;text-align:center"><b style="font-size:22px;display:block">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
+function select(k){cur=k;document.getElementById('zoomFields').style.display=k==='zoom'?'block':'none';document.getElementById('lineField').style.display=k==='line'?'block':'none';let btn=document.getElementById('bookBtn');btn.textContent=k==='email'?'Book via Email — Reply within 24h':k==='line'?'Book via LINE — Reply in seconds':'Book Zoom — 30 min';renderStats()}
+function goBook(k){select(k);showPage('booking')}
+function showPage(p){document.getElementById('page-dashboard').style.display=p==='dashboard'?'block':'none';document.getElementById('page-booking').style.display=p==='booking'?'block':'none';document.getElementById('tabDash').className=p==='dashboard'?'active':'';document.getElementById('tabBook').className=p==='booking'?'active':'';window.scrollTo(0,0)}
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts()}
+function buildDates(){let c=document.getElementById('dates');c.innerHTML='';for(let i=0;i<14;i++){let d=new Date();d.setDate(d.getDate()+i);let label=d.toLocaleDateString('en-US',{month:'short',day:'numeric',weekday:'short'});let b=document.createElement('button');b.textContent=label;b.onclick=()=>{selDate=label;document.querySelectorAll('#dates button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};c.appendChild(b)}}
+function buildTimes(){let c=document.getElementById('times');c.innerHTML='';['09:00','10:00','11:00','14:00','15:00','16:00'].forEach(t=>{let b=document.createElement('button');b.textContent=t;b.onclick=()=>{selTime=t;document.querySelectorAll('#times button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};c.appendChild(b)})}
+function submitBooking(){let name=document.getElementById('fName').value||'Guest';let msg=document.getElementById('fMsg').value||'';let extra=cur==='zoom'?` on ${selDate} at ${selTime||'--'}`:'';let booking={name,type:cur,msg,when:extra,cart:[...cart]};console.log('Booking:',booking);document.getElementById('result').innerHTML=`<div class="success">✅ Booked! ${name} — ${types[cur].title[lang]}${extra}<br>${cur==='line'?'We will reply on LINE in seconds':cur==='email'?'We will reply by Email within 24h':'Zoom link will be sent to your email'}<br>組合： ${[...cart].map(k=>products[k].title[lang]).join(' + ')||'尚未選組合'}<br>Rating: ★★★★★ 5/5</div>`;}
+buildDates();buildTimes();renderProducts();renderStats();select('line');
+</script></body></html>
