@@ -1,117 +1,158 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bookable — 讓客人自己預約，你不用一直回訊息</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bookable — Build Your Website Like Shopping</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0A0A0F;color:#fff;font-family:Inter,"Noto Sans TC",system-ui,Arial,sans-serif}
-a{color:#FF3B5C}.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;background:rgba(10,10,15,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
-.nav{display:flex;align-items:center;gap:12px;padding:14px 0}.logo{font-weight:900;font-size:22px}.logo span{color:#FF3B5C}
-.navlinks{margin-left:auto;display:flex;gap:8px}.navlinks button,.lang button{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;padding:8px 14px;border-radius:999px;cursor:pointer}
-.navlinks button.active,.lang button.active{background:#FF3B5C;border-color:#FF3B5C}.lang{display:flex;gap:6px}
-.hero{text-align:center;padding:44px 0 10px}.badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:6px 14px;border-radius:999px;font-size:13px}
-h1{font-size:clamp(32px,5vw,56px);line-height:1.08;margin:16px 0 10px}.grad{background:linear-gradient(90deg,#FF3B5C,#8B5CF6,#00D9FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sub{color:#B8BDC9;max-width:680px;margin:0 auto;font-size:17px;line-height:1.6}.stars{color:#FFD700;font-size:18px;margin-top:10px}
-.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
-.btn{padding:14px 22px;border-radius:999px;border:0;cursor:pointer;font-weight:800;font-size:16px}.btn-pink{background:linear-gradient(90deg,#FF3B5C,#8B5CF6);color:#fff}.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
-.layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;margin:24px 0}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.navlinks{display:none}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:640px){.grid{grid-template-columns:1fr}}
-.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;text-align:left;position:relative;transition:.2s}.card:hover{border-color:rgba(255,255,255,.25)}
-.card.sel{border-color:#FF3B5C;box-shadow:0 0 0 2px #FF3B5C,0 10px 40px rgba(255,59,92,.25)}
-.card.ai{border-color:#8B5CF6;box-shadow:0 0 0 1px #8B5CF6,0 10px 40px rgba(139,92,246,.25)}
-.card h3{margin:8px 0;font-size:20px}.card p{color:#9CA3AF;margin:6px 0;line-height:1.6;font-size:14.5px}.pill{display:inline-block;font-size:12px;background:#FF3B5C;padding:4px 10px;border-radius:999px;font-weight:700}.pill-purple{background:#8B5CF6}.pill-green{background:#00C853;color:#000}
-.price{font-size:22px;font-weight:900;margin:10px 0 2px}.price small{font-size:13px;color:#9CA3AF;font-weight:400}
-.proof{font-size:13px;color:#D1D5DB;background:rgba(255,255,255,.06);padding:8px 10px;border-radius:10px;margin:10px 0}
-.chat{background:#111118;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;font-size:13.5px;line-height:1.6}.chat .me{background:rgba(255,59,92,.18);padding:8px 10px;border-radius:12px;margin:6px 0}.chat .bot{background:rgba(139,92,246,.18);padding:8px 10px;border-radius:12px;margin:6px 0}
-.cart{position:sticky;top:80px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px}
-.cart h3{margin:0 0 6px}.cart ul{list-style:none;padding:0;margin:12px 0}.cart li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:14px}
-.total{display:flex;justify-content:space-between;font-weight:900;font-size:18px;margin:12px 0}
-input,textarea,select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;margin:6px 0}
-label{font-size:13px;color:#9CA3AF}.dates{display:flex;gap:8px;overflow-x:auto;padding:8px 0}.dates button,.times button{white-space:nowrap;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;cursor:pointer}.dates button.sel,.times button.sel{background:#FF3B5C;border-color:#FF3B5C}
-.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:600px){.times{grid-template-columns:repeat(2,1fr)}}
-.section{padding:28px 0}.video{width:100%;border-radius:16px;background:#111;display:block;min-height:200px}
-.success{background:#0f2a1a;border:1px solid #22c55e;border-radius:16px;padding:20px;text-align:center}
-footer{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;color:#9CA3AF;text-align:center}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:700px){.steps{grid-template-columns:1fr}}
-.who{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.who span{background:rgba(255,255,255,.08);padding:7px 12px;border-radius:999px;font-size:13px}
+:root{--pink:#FF3B5C;--violet:#8B5CF6;--cyan:#00D9FF;--bg:#07070D;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.1);--mut:#9CA3AF}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Inter,'Noto Sans TC','Hiragino Sans',Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(600px 300px at 15% 0%,rgba(255,59,92,.22),transparent 60%),radial-gradient(600px 300px at 90% 10%,rgba(139,92,246,.22),transparent 60%),radial-gradient(500px 300px at 50% 100%,rgba(0,217,255,.12),transparent 60%);pointer-events:none;z-index:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+header{position:sticky;top:0;background:rgba(7,7,13,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:20}
+.nav{display:flex;align-items:center;gap:12px;padding:14px 0;flex-wrap:wrap}.logo{font-weight:900;font-size:22px;letter-spacing:-.5px}.logo span{color:var(--pink)}.logo small{font-size:11px;color:var(--mut);font-weight:400;margin-left:6px}
+.lang{display:flex;gap:6px;margin-left:12px}.lang button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;padding:7px 12px;border-radius:999px;cursor:pointer;font-size:13px}.lang button.active{background:#fff;color:#000;font-weight:700}
+.cartBtn{margin-left:auto;background:linear-gradient(90deg,var(--pink),var(--violet));color:#fff;border:0;padding:11px 18px;border-radius:999px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(255,59,92,.35)}
+.hero{padding:44px 0 8px;text-align:center}.pill{display:inline-block;background:rgba(255,255,255,.08);border:1px solid var(--line);padding:6px 14px;border-radius:999px;font-size:13px;color:#D1D5DB}
+h1{font-size:clamp(32px,5vw,56px);line-height:1.05;margin:16px 0 10px;letter-spacing:-1px}.grad{background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--mut);max-width:680px;margin:0 auto;font-size:17px;line-height:1.6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:760px;margin:24px auto 0}@media(max-width:640px){.steps{grid-template-columns:1fr}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left}.step b{display:block;font-size:14px}.step span{color:var(--mut);font-size:13px}
+.main{display:grid;grid-template-columns:1fr 360px;gap:20px;padding:24px 0 60px}@media(max-width:900px){.main{grid-template-columns:1fr}}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tabs button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;padding:9px 15px;border-radius:999px;cursor:pointer;font-size:14px}.tabs button.active{background:var(--pink);border-color:var(--pink);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:22px;padding:18px;position:relative;transition:.18s;overflow:hidden}.card:hover{transform:translateY(-2px);border-color:rgba(255,59,92,.5);box-shadow:0 12px 32px rgba(0,0,0,.35)}.card.incart{border-color:var(--pink);box-shadow:0 0 0 2px var(--pink)}
+.card.ai{border-color:#8B5CF6;box-shadow:0 0 0 1px #8B5CF6,0 12px 32px rgba(139,92,246,.25)}
+.card.ai:hover{border-color:#A78BFA}
+.card.ai .badge{background:#8B5CF6}
+.aiChat{background:#0B0B14;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;font-size:13px;line-height:1.6;margin:8px 0;text-align:left}
+.aiChat .q{background:rgba(255,59,92,.18);padding:7px 9px;border-radius:10px;margin:5px 0}
+.aiChat .a{background:rgba(139,92,246,.22);padding:7px 9px;border-radius:10px;margin:5px 0}
+.aiChat small{color:#9CA3AF}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start}.icon{font-size:30px;width:52px;height:52px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center}.badge{background:var(--pink);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.card h3{margin:12px 0 4px;font-size:18px}.card p{color:var(--mut);font-size:14px;margin:4px 0 10px;line-height:1.5}
+.preview{width:100%;height:128px;border-radius:14px;background:#111;display:flex;align-items:center;justify-content:center;font-size:44px;border:1px solid var(--line);margin:8px 0;overflow:hidden;position:relative}.preview:after{content:"LIVE PREVIEW";position:absolute;bottom:8px;right:10px;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.35)}
+.quote{font-size:14px;color:var(--cyan);font-weight:700}
+.add{margin-top:12px;width:100%;padding:13px;border-radius:999px;border:0;cursor:pointer;font-weight:800;font-size:15px}.add.added{background:#22c55e;color:#fff}.add:not(.added){background:#fff;color:#000}
+.cart{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:22px;padding:20px;position:sticky;top:80px;height:fit-content;box-shadow:0 16px 40px rgba(0,0,0,.35)}.cart h2{margin:0 0 6px}.cart small{color:var(--mut)}
+.cartItem{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}.cartItem button{background:transparent;border:1px solid var(--line);color:#fff;border-radius:999px;padding:4px 10px;cursor:pointer}
+.total{font-size:20px;font-weight:800;margin:14px 0}.total small{font-size:13px;color:var(--mut);font-weight:400;display:block;margin-top:4px}
+.checkout{width:100%;padding:15px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--pink),var(--violet));color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.checkout2{width:100%;padding:13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:#fff;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px}
+.vidGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}@media(max-width:640px){.vidGrid{grid-template-columns:1fr}}
+.vidCard{background:#111;border:1px solid var(--line);border-radius:18px;padding:14px}
+.vidCard h4{margin:0 0 4px}.vidCard p{color:var(--mut);font-size:13px;margin:0 0 10px;line-height:1.5}
+.vidCard video{width:100%;border-radius:12px;background:#000;display:block;aspect-ratio:16/9}
+.vidTabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.vidTabs button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;padding:8px 14px;border-radius:999px;cursor:pointer}.vidTabs button.active{background:var(--pink)}
+.live{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:24px}.live h3{margin:0 0 8px}.demoBar{background:rgba(255,255,255,.06);border-radius:14px;padding:14px;margin:12px 0;font-size:14px;line-height:1.6}.demoBar b{color:var(--pink)}
+.mini{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}@media(max-width:600px){.mini{grid-template-columns:1fr 1fr}}.mini div{background:#111;border-radius:12px;padding:12px;text-align:center;border:1px solid var(--line);transition:.2s}
+footer{text-align:center;color:var(--mut);padding:30px 0;border-top:1px solid var(--line)}
 </style></head><body>
-<header><div class="wrap nav"><div class="logo">Bookable<span>.</span></div><div class="navlinks"><button id="tabDash" class="active" onclick="showPage('dashboard')">自由搭配</button><button id="tabBook" onclick="showPage('booking')">快速預約報價</button></div><div class="lang"><button class="active" onclick="setLang('zh',this)">繁中</button><button onclick="setLang('en',this)">EN</button><button onclick="setLang('ja',this)">日本語</button></div></div></header>
+<header><div class="wrap nav"><div class="logo">Bookable<span>.</span> <small data-i18n="logoSub">Build like shopping</small></div>
+<div class="lang"><button class="active" onclick="setLang('en',this)">EN</button><button onclick="setLang('zh',this)">繁中</button><button onclick="setLang('ja',this)">日本語</button></div>
+<button class="cartBtn" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">🛒 <span data-i18n="cartBtn">Cart</span> (<span id="cartCount">0</span>)</button></div></header>
 <div class="wrap">
-<div id="page-dashboard">
-<section class="hero"><span class="badge">✦ 深受台灣 120+ 工作室信賴 ・ 平均 7 天上線 ・ 包含 1 年維護</span>
-<h1>讓客人自己預約<br><span class="grad">你不用一直回訊息</span></h1>
-<p class="sub">不用再漏接電話、半夜回 LINE。選你要的功能，組合起來就是你的店專屬系統。不知道怎麼選？傳給我們，我們幫你配。</p>
-<div class="stars">★★★★★ <span style="color:#fff;font-size:15px">5.0 — 美業・餐廳・診所老闆都在用</span></div>
-<div class="who"><span>💅 美甲・美睫</span><span>💇 美髮・美容</span><span>🍜 餐廳・咖啡</span><span>🏥 診所・諮商</span><span>💪 健身・瑜珈</span></div>
-<div class="cta"><button class="btn btn-pink" onclick="document.getElementById('combo').scrollIntoView({behavior:'smooth'})">👇 開始搭配我的組合</button><button class="btn btn-ghost" onclick="goBook('line')">💬 不確定？LINE 問我，幫你配</button></div>
-</section>
-
-<section id="combo"><h2>自由搭配 — 選你要的，加進購物車</h2><p style="color:#9CA3AF">可以只買一個，也可以組合買。組合買更便宜，而且會互相串接。</p>
-<div class="layout">
-<div class="grid" id="typeGrid"></div>
-<aside class="cart"><h3>🛒 你的組合</h3><p id="cartEmpty" style="color:#9CA3AF;font-size:14px">購物車是空的，去左邊選一個功能</p><ul id="cartList"></ul><div class="total" id="cartTotal" style="display:none"><span>預估合計</span><span id="totalPrice"></span></div><p style="font-size:13px;color:#9CA3AF">💡 <b style="color:#fff">不確定要哪些？</b><br>打電話 / 留言，我幫你配最適合的組合，不會多買。</p><a href="https://line.me/ti/p/A2pAmEM5Ce" target="_blank" style="text-decoration:none"><button class="btn btn-pink" style="width:100%;background:#06C755">LINE 私訊我幫你配 →</button></a><p style="font-size:12px;color:#9CA3AF;text-align:center;margin-top:8px">點了會跳到 LINE，你把購物車截圖給我看就好</p><p style="font-size:12px;color:#9CA3AF">✅ 7 天上線 ✅ 1 年維護 ✅ 不會用，教你到會</p></aside>
+<section class="hero">
+<span class="pill">✨ <span data-i18n="pill">No prices — Call / Leave a message to get a quote</span></span>
+<h1><span data-i18n="h1a">Build your website</span><br><span class="grad" data-i18n="h1b">like shopping</span></h1>
+<p class="sub" data-i18n="sub">Pick functions like products. Add to cart. See your live preview. Then call or leave a message — we quote you based on what you picked.</p>
+<div class="steps">
+<div class="step"><b>① <span data-i18n="s1t">Pick</span></b><span data-i18n="s1d">Tap + Add to Cart on any function</span></div>
+<div class="step"><b>② <span data-i18n="s2t">Preview</span></b><span data-i18n="s2d">See which pages your site will have</span></div>
+<div class="step"><b>③ <span data-i18n="s3t">Get Quote</span></b><span data-i18n="s3d">Call / Leave a message with your cart</span></div>
 </div>
 </section>
 
-<section><h2>看看預約流程 — 真實客人怎麼用</h2><div class="card" style="text-align:center"><h3>See how booking works</h3><p>Real booking flow — M.nail on LINE, reply in seconds</p><video class="video" controls playsinline src="demo/linereply.mp4"></video><p style="font-size:13px;color:#9CA3AF">如果影片沒跑出來，請確認 demo/linereply.mp4 跟這個 html 在同一個資料夾旁邊的 demo/ 資料夾裡。</p></div></section>
-
-<section><h2>怎麼運作？3 步就好</h2><div class="steps"><div class="card"><b>1.</b><h3>選組合</h3><p>選官網 / 預約 / AI 電話助理，加入購物車。</p></div><div class="card"><b>2.</b><h3>LINE 傳給我們</h3><p>把購物車截圖傳 LINE，我們確認報價 + 上線時間。</p></div><div class="card"><b>3.</b><h3>7 天上線</h3><p>我們做好給你看，你 OK 才上線。之後有問題都找我們。</p></div></div></section>
+<div class="main">
+<div>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+<div class="live">
+<h3 data-i18n="liveTitle">Live Preview — Your site right now</h3>
+<div id="livePreview" class="demoBar">—</div>
+<div class="mini">
+<div id="pv-home" style="opacity:1"><div style="font-size:26px">🏠</div><div data-i18n="pvHome">Home</div></div>
+<div id="pv-booking" style="opacity:.3"><div style="font-size:26px">📅</div><div data-i18n="pvBook">Booking</div></div>
+<div id="pv-shop" style="opacity:.3"><div style="font-size:26px">🛍️</div><div data-i18n="pvShop">Shop</div></div>
+<div id="pv-ai" style="opacity:.3"><div style="font-size:26px">🤖</div><div>AI 電話</div></div>
+</div>
+<p style="color:#9CA3AF;font-size:13px" data-i18n="liveHint">Pick Booking / Shop and the preview lights up — that's what your site will have.</p>
+</div>
+<!-- REAL DEMOS - uses your local demo/ folder, NOT GitHub raw -->
+<div class="live" style="margin-top:16px">
+<h3>🎬 真實示範 — 客人實際怎麼用</h3>
+<p style="color:#9CA3AF;font-size:13px;margin:6px 0 0">點下面切換。影片放在跟這個 html 同一個資料夾的 <code>demo/</code> 裡面就能播，不用等 GitHub。</p>
+<div class="vidTabs" id="vidTabs">
+<button class="active" onclick="showVid('line',this)">💬 LINE 回覆</button>
+<button onclick="showVid('email',this)">✉️ Email 預約</button>
+<button onclick="showVid('zoom',this)">🎥 Zoom 通話</button>
+<button onclick="showVid('clothing',this)">👗 服飾店範例</button>
+</div>
+<div id="vidWrap">
+<div class="vidCard" data-vid="line"><h4>💬 LINE 回覆 — 幾秒內回覆</h4><p>客人用 LINE 問，系統自動回、直接預約。這是美業老闆最常用的。</p><video controls playsinline preload="metadata" src="demo/linereply.mp4"><source src="demo/linereply.mp4" type="video/mp4">你的瀏覽器不支援影片，請確認 demo/linereply.mp4 是否存在。</video></div>
+<div class="vidCard" data-vid="email" style="display:none"><h4>✉️ Email 預約</h4><p>不想用 LINE 的客人，用 Email 也能預約，24h 內回覆。</p><video controls playsinline preload="metadata" src="demo/emailbooking.mp4"><source src="demo/emailbooking.mp4" type="video/mp4">請確認 demo/emailbooking.mp4 是否存在。</video></div>
+<div class="vidCard" data-vid="zoom" style="display:none"><h4>🎥 Zoom 通話 — 30 分鐘面對面</h4><p>大案子、怕被騙的客人，先 Zoom 聊一下再決定。</p><video controls playsinline preload="metadata" src="demo/zoom-call.mp4"><source src="demo/zoom-call.mp4" type="video/mp4">請把 “zoom call.mp4” 改名成 “zoom-call.mp4” 才能播。</video></div>
+<div class="vidCard" data-vid="clothing" style="display:none"><h4>👗 服飾店範例</h4><p>不只美業，服飾店、選物店也是一樣的流程。</p><video controls playsinline preload="metadata" src="demo/clothing.mp4"><source src="demo/clothing.mp4" type="video/mp4">請確認 demo/clothing.mp4 是否存在。</video></div>
+</div>
+<p style="color:#9CA3AF;font-size:12px;margin-top:10px">⚠️ 重要：資料夾結構要是這樣才播得出來：<br><code>Shop.html</code> + <code>demo/linereply.mp4</code> + <code>demo/emailbooking.mp4</code> + <code>demo/zoom-call.mp4</code> + <code>demo/clothing.mp4</code><br>如果檔名有空格（像 “zoom call.mp4”），一定要改成 “zoom-call.mp4”，空格會讓瀏覽器找不到檔案。</p>
+</div>
 </div>
 
-<div id="page-booking" style="display:none">
-<section><h1>快速預約報價</h1><p class="sub">選 Email、LINE 或 Zoom。行事曆只給 Zoom 用。LINE 最快，幾秒回。</p>
-<div class="grid" id="typeGrid2"></div>
-<div id="dynamicStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0"></div>
-<div class="card">
-<div id="zoomFields" style="display:none"><label>選擇日期</label><div class="dates" id="dates"></div><label>選擇時間</label><div class="times" id="times"></div></div>
-<label>姓名 / 店名</label><input id="fName" placeholder="例如：M.nail / Charlie">
-<label>Email</label><input id="fEmail" placeholder="you@email.com">
-<div id="lineField" style="display:none"><label>LINE ID</label><input id="fLine" placeholder="@yourline"></div>
-<label>你需要什麼？</label><textarea id="fMsg" rows="3" placeholder="例如：美甲店，想讓客人自己預約，不想一直回 LINE..."></textarea>
-<button class="btn btn-pink" style="width:100%" id="bookBtn" onclick="submitBooking()">Book via LINE — Reply in seconds</button>
-<div id="result"></div><p style="font-size:12px;color:#9CA3AF">Demo 前端。正式版會串接你的後端 /api/bookings。</p>
-</div></section>
+<aside id="cart" class="cart">
+<h2>🛒 <span data-i18n="yourCombo">Your Combo</span></h2><small data-i18n="cartSub">Pick like shopping, no prices shown</small>
+<div id="cartItems" style="margin-top:12px"></div>
+<div class="total">📞 <span data-i18n="quote">Call / Leave a message to get a quote</span><small data-i18n="quoteSub">No price on page — we quote by your combo</small></div>
+<div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:12px;font-size:13px;line-height:1.6">💡 <span data-i18n="tip">Not sure what you need? Call / Leave a message, we help you pick the best combo. No hard selling.</span></div>
+<button class="checkout" onclick="checkout()">→ <span data-i18n="checkout">Get Quote on LINE</span></button>
+<button class="checkout2" onclick="checkout('call')">📞 <span data-i18n="callBtn">Call to Get Quote</span></button>
+<p style="font-size:12px;color:#9CA3AF;text-align:center;margin-top:10px" data-i18n="checkoutHint">We copy your cart — just paste it to us.</p>
+</aside>
 </div>
-<footer>Bookable — Rated 5/5 • EN / 繁中 / 日本語 • Email • LINE • Zoom • AI 電話助理</footer>
 </div>
+<footer>Bookable — <span data-i18n="foot">Build like shopping · Call / Leave a message to get a quote</span></footer>
 <script>
-const LINE_URL='https://line.me/ti/p/A2pAmEM5Ce';
-let cur='line', lang='zh', selDate='', selTime='', cart=new Set();
-const products={
- website:{icon:'🏠',badge:'最熱門',badgeClass:'',title:{zh:'形象官網',en:'Website',ja:'公式サイト'},outcome:{zh:'讓客人 Google 到你，覺得你很專業',en:'Get found on Google, look professional',ja:'Googleで見つけて、プロに見せる'},desc:{zh:'品牌官網 + 手機版 + SEO基礎。客人搜尋、看評價、直接預約都在同一頁。',en:'Brand site + mobile + SEO basics.',ja:'ブランドサイト＋モバイル＋SEO基礎'},price:'NT$ 15,000 起',priceNote:{zh:'一次性 ・ 含 1 年維護',en:'One-time ・ 1yr maintenance',ja:'一回 ・ 1年保守'},proof:'已有 80+ 店家用這款開店，平均 7 天上線'},
- booking:{icon:'🗓️',badge:'美業最愛',badgeClass:'',title:{zh:'預約系統',en:'Booking System',ja:'予約システム'},outcome:{zh:'客人自己預約，你不用一直回訊息',en:'Customers book themselves. No more replying all day.',ja:'お客様が自分で予約。返信地獄から解放'},desc:{zh:'線上預約 + LINE 通知 + 行事曆。預約、取消、改期都自動，減少 No-show。',en:'Online booking + LINE notify + calendar.',ja:'オンライン予約＋LINE通知＋カレンダー'},price:'NT$ 990 / 月 起',priceNote:{zh:'月付 ・ 可隨時停',en:'Monthly ・ Cancel anytime',ja:'月額 ・ いつでも解約'},proof:'美業老闆平均每天省 2 小時回 LINE，少接漏接'},
- ai:{icon:'🤖',badge:'NEW ・ 節省人力',badgeClass:'pill-purple',title:{zh:'AI 電話助理',en:'AI Phone Assistant',ja:'AI電話アシスタント'},outcome:{zh:'沒接到的電話，AI 幫你接回來',en:'Missed calls? AI answers for you.',ja:'取れなかった電話、AIが代わりに出る'},desc:{zh:'專屬號碼 + AI 接聽 + 預約 + 問答。忙著做客人的時候，AI 幫你接電話、問問題、直接預約。',en:'Dedicated number + AI answers + books + Q&A.',ja:'専用番号＋AI応答＋予約＋Q&A'},price:'NT$ 1,490 / 月 起',priceNote:{zh:'含專屬號碼 ・ 24H 接聽',en:'Includes number ・ 24h',ja:'専用番号込み・24時間'},proof:'適合：做客人的時候沒手接電話、常常漏接'},
- call:{icon:'📞',badge:'免費諮詢',badgeClass:'pill-green',title:{zh:'Call / 留言取得報價',en:'Call / Message for Quote',ja:'電話・メッセージで見積'},outcome:{zh:'不確定要哪些？我幫你配',en:'Not sure? We help you pick.',ja:'迷ったら、私たちが選ぶのを手伝う'},desc:{zh:'不用顯示價格 — 私訊我，說你的需求，我給你最適合的組合報價。',en:'Custom quote — message us.',ja:'カスタム見積 — メッセージください'},price:'免費諮詢',priceNote:{zh:'不買也沒關係',en:'No pressure',ja:'買わなくてもOK'},proof:'90% 的老闆都是先問，再決定'}
+const I18N={
+en:{logoSub:"Build like shopping",pill:"No prices — Call / Leave a message to get a quote",cartBtn:"Cart",h1a:"Build your website",h1b:"like shopping",sub:"Pick functions like products. Add to cart. See your live preview. Then call or leave a message — we quote you based on what you picked.",s1t:"Pick",s1d:"Tap + Add to Cart on any function",s2t:"Preview",s2d:"See which pages your site will have",s3t:"Get Quote",s3d:"Call / Leave a message with your cart",liveTitle:"Live Preview — Your site right now",pvHome:"Home",pvBook:"Booking",pvShop:"Shop",liveHint:"Pick Booking / Shop and the preview lights up — that's what your site will have.",yourCombo:"Your Combo",cartSub:"Pick like shopping, no prices shown",quote:"Call / Leave a message to get a quote",quoteSub:"No price on page — we quote by your combo",tip:"Not sure what you need? Call / Leave a message, we help you pick the best combo. No hard selling.",checkout:"Get Quote on LINE",callBtn:"Call to Get Quote",checkoutHint:"We copy your cart — just paste it to us.",foot:"Build like shopping · Call / Leave a message to get a quote",empty:"Cart is empty — pick a function on the left",added:"✓ Added — Tap to remove",add:"＋ Add to Cart",quoteLabel:"📞 Call / Leave a message to get a quote",catAll:"All",youPicked:"You picked: ",willHave:"Your site will have: Home",checkoutTitle:"Copied your cart!" },
+zh:{logoSub:"像購物一樣組網站",pill:"不標價 — 打電話 / 留言取得報價",cartBtn:"購物車",h1a:"像購物一樣",h1b:"組你的網站",sub:"把功能當商品挑，加入購物車，即時看預覽。選好後打電話 / 留言，我依你的組合報價。",s1t:"挑選",s1d:"點 ＋ 加入購物車",s2t:"預覽",s2d:"看你的網站會有哪些頁面",s3t:"取得報價",s3d:"帶著購物車打電話 / 留言",liveTitle:"即時預覽 — 你現在選的網站",pvHome:"首頁",pvBook:"預約頁",pvShop:"商店頁",liveHint:"選了預約 / 商店，預覽就會亮起來 — 那就是你的網站會有的頁面。",yourCombo:"你的組合",cartSub:"像購物一樣挑，不顯示價格",quote:"打電話 / 留言取得報價",quoteSub:"頁面不標價 — 依你的組合報價",tip:"不確定要哪些？打電話 / 留言，我幫你配最適合的組合，不推銷。",checkout:"LINE 取得報價",callBtn:"打電話取得報價",checkoutHint:"會幫你複製購物車 — 直接貼給我們就行。",foot:"像購物一樣組網站 · 打電話 / 留言取得報價",empty:"購物車是空的 — 去左邊選一個功能",added:"✓ 已加入 — 點我移除",add:"＋ 加入購物車",quoteLabel:"📞 打電話 / 留言取得報價",catAll:"全部",youPicked:"你選了：",willHave:"你的網站會有：首頁",checkoutTitle:"已複製你的購物車！"},
+ja:{logoSub:"ショッピングみたいに作る",pill:"価格は非表示 — 電話 / メッセージで見積もり",cartBtn:"カート",h1a:"ショッピングみたいに",h1b:"サイトを作る",sub:"機能を商品みたいに選んで、カートに入れて、プレビューを見る。決まったら電話 / メッセージで — あなたの組み合わせで見積もりします。",s1t:"選ぶ",s1d:"＋ カートに入れる をタップ",s2t:"プレビュー",s2d:"サイトにどんなページが付くか見る",s3t:"見積もり",s3d:"カートを持って電話 / メッセージ",liveTitle:"ライブプレビュー — 今のあなたのサイト",pvHome:"ホーム",pvBook:"予約",pvShop:"ショップ",liveHint:"予約 / ショップを選ぶとプレビューが光ります — それがあなたのサイトに付くページです。",yourCombo:"あなたの組み合わせ",cartSub:"ショッピングみたいに選ぶ、価格は非表示",quote:"電話 / メッセージで見積もり",quoteSub:"ページに価格なし — 組み合わせで見積もり",tip:"迷ったら電話 / メッセージで。最適な組み合わせを提案します。無理な営業なし。",checkout:"LINEで見積もり",callBtn:"電話で見積もり",checkoutHint:"カートをコピーします — そのまま貼ってください。",foot:"ショッピングみたいに作る · 電話 / メッセージで見積もり",empty:"カートは空です — 左から機能を選んでください",added:"✓ 追加済み — タップで外す",add:"＋ カートに入れる",quoteLabel:"📞 電話 / メッセージで見積もり",catAll:"すべて",youPicked:"選んだもの：",willHave:"あなたのサイトには：ホーム",checkoutTitle:"カートをコピーしました！"}
 };
-const i18n={zh:{},en:{},ja:{}};
-function renderProducts(){
- ['typeGrid','typeGrid2'].forEach(id=>{
-  let el=document.getElementById(id); if(!el) return; el.innerHTML='';
-  Object.keys(products).forEach(k=>{
-   let p=products[k]; let d=document.createElement('div'); d.className='card'+(cart.has(k)?' sel':'')+(k==='ai'?' ai':'');
-   let extra=k==='ai'?`<div class="chat"><div class="me">客人：請問明天還有位子嗎？</div><div class="bot">Mia：有的，請問幾位？幫您預約明天 7 點可以嗎？</div></div>`:'';
-   d.innerHTML=`<span class="pill ${p.badgeClass}">${p.badge}</span><div style="font-size:28px;margin-top:8px">${p.icon}</div><h3>${p.title[lang]}</h3><p style="color:#fff;font-weight:700;font-size:15px">${p.outcome[lang]}</p><p>${p.desc[lang]}</p>${extra}<div class="price">${p.price} <small>${p.priceNote[lang]}</small></div><div class="proof">✅ ${p.proof}</div><button class="btn ${cart.has(k)?'btn-ghost':'btn-pink'}" style="padding:10px 16px;font-size:14px;width:100%" onclick="toggleCart('${k}',event)">${cart.has(k)?'✓ 已加入 — 點我移除':'+ 加入購物車'}</button>`;
-   el.appendChild(d);
-  });
- });
- renderCart();
-}
-function toggleCart(k,e){ e&&e.stopPropagation(); if(cart.has(k)) cart.delete(k); else cart.add(k); renderProducts(); }
-function renderCart(){
- let list=document.getElementById('cartList'); if(!list) return;
- list.innerHTML=''; document.getElementById('cartEmpty').style.display=cart.size?'none':'block';
- document.getElementById('cartTotal').style.display=cart.size?'flex':'none';
- let total=0; cart.forEach(k=>{ let li=document.createElement('li'); li.innerHTML=`<span>${products[k].icon} ${products[k].title[lang]}</span><span>${products[k].price}</span>`; list.appendChild(li); });
- document.getElementById('totalPrice').textContent=cart.size? 'LINE 問精準報價 →':'';
-}
-const types={email:{icon:'✉️',title:{en:'Email',zh:'Email',ja:'Email'},desc:{en:'Async — reply within 24h',zh:'非同步 — 24小時內回覆',ja:'非同期 — 24時間以内に返信'},stats:[['24h','Reply within 24h'],['No scheduling','No date needed'],['Async','Send anytime']]},line:{icon:'💬',title:{en:'LINE Message',zh:'LINE 訊息',ja:'LINEメッセージ'},desc:{en:'Instant chat — reply in seconds',zh:'即時聊天 — 幾秒內回覆',ja:'インスタント — 数秒で返信'},stats:[['Seconds','Reply in seconds'],['No scheduling','No date needed'],['Instant','Chat on LINE']]},zoom:{icon:'🎥',title:{en:'Zoom Call',zh:'Zoom 視訊',ja:'Zoom通話'},desc:{en:'30-min face to face',zh:'30分鐘面對面',ja:'30分 対面'},stats:[['30 min','Duration'],['Pick date+time','Calendar booking'],['Zoom link','Sent by email']]}};
-function renderStats(){let s=types[cur].stats;document.getElementById('dynamicStats').innerHTML=s.map(x=>`<div style="background:rgba(255,255,255,.06);border-radius:16px;padding:16px;text-align:center"><b style="font-size:22px;display:block">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
-function select(k){cur=k;document.getElementById('zoomFields').style.display=k==='zoom'?'block':'none';document.getElementById('lineField').style.display=k==='line'?'block':'none';let btn=document.getElementById('bookBtn');btn.textContent=k==='email'?'Book via Email — Reply within 24h':k==='line'?'Book via LINE — Reply in seconds':'Book Zoom — 30 min';renderStats()}
-function goBook(k){select(k);showPage('booking')}
-function showPage(p){document.getElementById('page-dashboard').style.display=p==='dashboard'?'block':'none';document.getElementById('page-booking').style.display=p==='booking'?'block':'none';document.getElementById('tabDash').className=p==='dashboard'?'active':'';document.getElementById('tabBook').className=p==='booking'?'active':'';window.scrollTo(0,0)}
-function setLang(l,btn){lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts()}
-function buildDates(){let c=document.getElementById('dates');c.innerHTML='';for(let i=0;i<14;i++){let d=new Date();d.setDate(d.getDate()+i);let label=d.toLocaleDateString('en-US',{month:'short',day:'numeric',weekday:'short'});let b=document.createElement('button');b.textContent=label;b.onclick=()=>{selDate=label;document.querySelectorAll('#dates button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};c.appendChild(b)}}
-function buildTimes(){let c=document.getElementById('times');c.innerHTML='';['09:00','10:00','11:00','14:00','15:00','16:00'].forEach(t=>{let b=document.createElement('button');b.textContent=t;b.onclick=()=>{selTime=t;document.querySelectorAll('#times button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};c.appendChild(b)})}
-function submitBooking(){let name=document.getElementById('fName').value||'Guest';let msg=document.getElementById('fMsg').value||'';let extra=cur==='zoom'?` on ${selDate} at ${selTime||'--'}`:'';let booking={name,type:cur,msg,when:extra,cart:[...cart]};console.log('Booking:',booking);document.getElementById('result').innerHTML=`<div class="success">✅ Booked! ${name} — ${types[cur].title[lang]}${extra}<br>${cur==='line'?'We will reply on LINE in seconds':cur==='email'?'We will reply by Email within 24h':'Zoom link will be sent to your email'}<br>組合： ${[...cart].map(k=>products[k].title[lang]).join(' + ')||'尚未選組合'}<br>Rating: ★★★★★ 5/5</div>`;}
-buildDates();buildTimes();renderProducts();renderStats();select('line');
+let lang='en';
+const products=[
+{id:'site',cat:'bundle',icon:'🏠',name:{en:'Brand Website',zh:'形象官網',ja:'ブランドサイト'},desc:{en:'Brand site + Mobile + SEO basics',zh:'品牌官網 + 手機版 + SEO基礎',ja:'ブランドサイト + モバイル + SEO基礎'},tag:{en:'Most Popular',zh:'最熱門',ja:'一番人気'}},
+{id:'booking',cat:'bundle',icon:'📅',name:{en:'Booking System',zh:'預約系統',ja:'予約システム'},desc:{en:'Online booking + LINE notify + Calendar',zh:'線上預約 + LINE通知 + 行事曆',ja:'オンライン予約 + LINE通知 + カレンダー'},tag:{en:'For Beauty',zh:'美業最愛',ja:'美容向け'}},
+{id:'aiPhone',cat:'bundle',icon:'🤖',name:{en:'AI Phone Assistant',zh:'AI 電話助理',ja:'AI電話アシスタント'},desc:{en:'Auto Answer + Booking + Q&A',zh:'自動接聽 + 預約 + 問答',ja:'自動応答 + 予約 + Q&A'},tag:{en:'NEW · Save Staff Time',zh:'NEW ・ 節省人力',ja:'NEW ・ 人手不足解消'},isAI:true},
+{id:'shop',cat:'bundle',icon:'🛍️',name:{en:'Online Store',zh:'網路商店',ja:'ネットショップ'},desc:{en:'Cart + Payments + Orders',zh:'購物車 + 金流 + 訂單',ja:'カート + 決済 + 注文'},tag:{en:'',zh:'',ja:''}},
+{id:'member',cat:'bundle',icon:'👑',name:{en:'Member Store',zh:'會員商店',ja:'会員ショップ'},desc:{en:'Members + Wallet + Coupons + VIP',zh:'會員 + 儲值金 + 優惠券 + VIP',ja:'会員 + チャージ + クーポン + VIP'},tag:{en:'Full Version',zh:'完整版',ja:'フル版'}},
+{id:'erp',cat:'bundle',icon:'🏢',name:{en:'Internal System',zh:'企業內部系統',ja:'社内システム'},desc:{en:'Check-in + Scheduling + Reports',zh:'打卡 + 排班 + 報表',ja:'打刻 + シフト + レポート'},tag:{en:'',zh:'',ja:''}},
+{id:'onepage',cat:'single',icon:'📄',name:{en:'One-Page Site',zh:'一頁式',ja:'1ページサイト'},desc:{en:'Single page, launch fast',zh:'單頁形象頁，快速上線',ja:'1ページで早く公開'},tag:{en:'',zh:'',ja:''}},
+{id:'edit',cat:'single',icon:'✏️',name:{en:'Text / Image Edit',zh:'改字改圖',ja:'文字・画像変更'},desc:{en:'Change text & images',zh:'換文字、換圖片',ja:'文字・画像を差し替え'},tag:{en:'',zh:'',ja:''}},
+{id:'layout',cat:'single',icon:'🎨',name:{en:'Layout Change',zh:'改版面',ja:'レイアウト変更'},desc:{en:'New layout & style',zh:'重新排版、換風格',ja:'レイアウト・スタイル変更'},tag:{en:'',zh:'',ja:''}},
+{id:'memberSys',cat:'single',icon:'👤',name:{en:'Member System',zh:'會員系統',ja:'会員システム'},desc:{en:'Signup, login, member data',zh:'註冊、登入、會員資料',ja:'登録・ログイン・会員情報'},tag:{en:'',zh:'',ja:''}},
+{id:'vip',cat:'single',icon:'⭐',name:{en:'VIP Levels',zh:'VIP 等級',ja:'VIPランク'},desc:{en:'VIP tiers & member price',zh:'VIP分級、會員價',ja:'VIPランク・会員価格'},tag:{en:'',zh:'',ja:''}},
+{id:'login',cat:'single',icon:'🔑',name:{en:'LINE / Google Login',zh:'LINE / Google 登入',ja:'LINE / Google ログイン'},desc:{en:'One-tap login',zh:'一鍵登入',ja:'ワンタップログイン'},tag:{en:'',zh:'',ja:''}},
+{id:'points',cat:'single',icon:'🎁',name:{en:'Points',zh:'集點系統',ja:'ポイント'},desc:{en:'Earn points, redeem',zh:'消費集點換購',ja:'貯めて交換'},tag:{en:'',zh:'',ja:''}},
+{id:'coupon',cat:'single',icon:'🎟️',name:{en:'Coupons',zh:'優惠券',ja:'クーポン'},desc:{en:'Discount codes, gifts',zh:'折扣碼、滿額贈',ja:'割引コード・特典'},tag:{en:'',zh:'',ja:''}},
+{id:'wallet',cat:'single',icon:'💰',name:{en:'Wallet / Top-up',zh:'儲值金',ja:'チャージ'},desc:{en:'Top-up & balance pay',zh:'線上儲值、餘額消費',ja:'チャージ・残高決済'},tag:{en:'',zh:'',ja:''}},
+{id:'cart',cat:'single',icon:'🛒',name:{en:'Cart & Orders',zh:'購物車訂單',ja:'カート・注文'},desc:{en:'Cart + order dashboard',zh:'購物車 + 訂單後台',ja:'カート + 注文管理'},tag:{en:'',zh:'',ja:''}},
+{id:'payment',cat:'single',icon:'💳',name:{en:'Payments',zh:'金流串接',ja:'決済連携'},desc:{en:'Card, ATM, convenience',zh:'信用卡、ATM、超商',ja:'カード・ATM・コンビニ'},tag:{en:'',zh:'',ja:''}},
+{id:'invoice',cat:'single',icon:'🧾',name:{en:'E-Invoice',zh:'電子發票',ja:'電子領収書'},desc:{en:'Auto e-invoice',zh:'自動開立',ja:'自動発行'},tag:{en:'',zh:'',ja:''}},
+{id:'admin',cat:'single',icon:'🖥️',name:{en:'Admin Dashboard',zh:'管理後台',ja:'管理画面'},desc:{en:'Manage on phone + PC',zh:'手機+電腦都能看',ja:'スマホ + PCで管理'},tag:{en:'',zh:'',ja:''}},
+{id:'linePush',cat:'line',icon:'📣',name:{en:'LINE Push',zh:'LINE 推播',ja:'LINE配信'},desc:{en:'Booking & promo push',zh:'新預約、優惠推播',ja:'予約・キャンペーン配信'},tag:{en:'Hot',zh:'熱門',ja:'人気'}},
+{id:'lineBot',cat:'line',icon:'🤖',name:{en:'LINE Bot',zh:'LINE 機器人',ja:'LINE Bot'},desc:{en:'Auto reply & menu',zh:'自動回覆、選單',ja:'自動返信・メニュー'},tag:{en:'',zh:'',ja:''}},
+{id:'ai',cat:'line',icon:'✨',name:{en:'AI Support',zh:'AI 客服',ja:'AIカスタマー'},desc:{en:'24h auto answer FAQs',zh:'24h自動回覆常見問題',ja:'24時間自動回答'},tag:{en:'',zh:'',ja:''}},
+{id:'seo',cat:'care',icon:'🔍',name:{en:'SEO / GEO / AEO',zh:'SEO / GEO / AEO',ja:'SEO / GEO / AEO'},desc:{en:'Be found on Google & AI',zh:'讓 Google / AI 找到你',ja:'Google / AIで見つけてもらう'},tag:{en:'',zh:'',ja:''}},
+{id:'domain',cat:'care',icon:'🌐',name:{en:'Domain Setup',zh:'代辦網域',ja:'ドメイン代行'},desc:{en:'We buy & set up domain',zh:'幫你買網址',ja:'ドメイン取得代行'},tag:{en:'',zh:'',ja:''}},
+{id:'hosting',cat:'care',icon:'☁️',name:{en:'Hosting Care',zh:'代管主機',ja:'ホスティング管理'},desc:{en:'Hosting & backup',zh:'主機代管、備份',ja:'ホスティング・バックアップ'},tag:{en:'',zh:'',ja:''}},
+];
+let cart=new Set(), filter='all';
+const cats=[['all','All','全部','すべて'],['bundle','Bundles','整套','セット'],['single','Single','單項','単品'],['line','LINE / AI','LINE / AI','LINE / AI'],['care','Care','代管','管理']];
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('[data-i18n]').forEach(el=>{let k=el.getAttribute('data-i18n');if(I18N[lang][k])el.textContent=I18N[lang][k]});document.documentElement.lang=l==='zh'?'zh-Hant':l;renderTabs();renderGrid();renderCart();updatePreview()}
+function renderTabs(){document.getElementById('tabs').innerHTML=cats.map(c=>`<button class="${filter===c[0]?'active':''}" onclick="setFilter('${c[0]}')">${c[lang==='zh'?2:lang==='ja'?3:1]}</button>`).join('')}
+function showVid(id,btn){document.querySelectorAll('#vidTabs button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('[data-vid]').forEach(el=>{const on=el.getAttribute('data-vid')===id;el.style.display=on?'block':'none';const v=el.querySelector('video');if(v&&!on)v.pause()})}
+function setFilter(c){filter=c;renderTabs();renderGrid()}
+function renderGrid(){let list=products.filter(p=>filter==='all'||p.cat===filter);document.getElementById('grid').innerHTML=list.map(p=>{
+const aiChat = p.isAI ? `<div class="aiChat"><div class="q">客人：請問明天還有位子嗎？</div><div class="a">Mia：有的，請問幾位？幫您預約明天 7 點可以嗎？</div><small>沒接到的電話，AI 幫你接回來</small></div>` : `<div class="preview">${p.icon}</div>`;
+return `<div class="card ${cart.has(p.id)?'incart':''} ${p.isAI?'ai':''}"><div class="top"><span class="icon">${p.icon}</span>${p.tag[lang]?`<span class="badge">${p.tag[lang]}</span>`:''}</div><h3>${p.name[lang]}</h3><p>${p.desc[lang]}</p>${aiChat}<div class="quote">${I18N[lang].quoteLabel}</div><button class="add ${cart.has(p.id)?'added':''}" onclick="toggle('${p.id}')">${cart.has(p.id)?I18N[lang].added:I18N[lang].add}</button></div>`}).join('')}
+function toggle(id){if(cart.has(id))cart.delete(id);else cart.add(id);renderGrid();renderCart();updatePreview()}
+function renderCart(){let items=[...cart].map(id=>products.find(p=>p.id===id));document.getElementById('cartCount').textContent=items.length;document.getElementById('cartItems').innerHTML=!items.length?`<p style="color:#9CA3AF">${I18N[lang].empty}</p>`:items.map(p=>`<div class="cartItem"><span>${p.icon} ${p.name[lang]}</span><span><button onclick="toggle('${p.id}')">✕</button></span></div>`).join('')}
+function updatePreview(){let hasBooking=cart.has('booking');let hasShop=cart.has('shop')||cart.has('member')||cart.has('cart');let hasAI=cart.has('aiPhone');document.getElementById('pv-booking').style.opacity=hasBooking?1:.3;document.getElementById('pv-shop').style.opacity=hasShop?1:.3;if(document.getElementById('pv-ai'))document.getElementById('pv-ai').style.opacity=hasAI?1:.3;let names=[...cart].map(id=>products.find(p=>p.id===id).name[lang]).join('、');document.getElementById('livePreview').innerHTML=cart.size?`${I18N[lang].youPicked}<b>${names}</b><br>${I18N[lang].willHave} ${hasBooking?' + Booking':''} ${hasShop?' + Shop':''} ${cart.has('aiPhone')?' + AI Phone':''}`:'—'}
+function checkout(mode){let items=[...cart].map(id=>products.find(p=>p.id===id));let text=(lang==='zh'?'你好，我在 Bookable 選了：\n':lang==='ja'?'こんにちは、Bookableで選びました：\n':'Hi, I picked on Bookable:\n')+items.map(p=>`- ${p.name[lang]}`).join('\n')+'\n'+(lang==='zh'?'請報價給我，謝謝！':lang==='ja'?'見積もりをお願いします！':'Please quote me, thanks!');try{navigator.clipboard.writeText(text)}catch(e){}alert(I18N[lang].checkoutTitle+'\n\n'+text);if(mode==='call'){window.location.href='tel:+886900000000'}else{window.open('https://line.me/ti/p/A2pAmEM5Ce','_blank')}}
+renderTabs();renderGrid();renderCart();updatePreview();
 </script></body></html>
